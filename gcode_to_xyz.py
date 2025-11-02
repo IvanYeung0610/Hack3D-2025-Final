@@ -29,7 +29,7 @@ def gcode_to_xyz(gcode_path, xyz_path):
         for x, y, z in xyz_points:
             outfile.write(f"{x:.5f} {y:.5f} {z:.5f}\n")
     
-    print(f"✅ Converted {len(xyz_points)} points from {gcode_path} → {xyz_path}")
+    print(f"Converted {len(xyz_points)} points from {gcode_path} → {xyz_path}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
