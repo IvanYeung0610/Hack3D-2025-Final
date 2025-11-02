@@ -17,15 +17,16 @@ def point_cloud_generation(x_peaks, y_peaks, z_peaks, e_peaks, output_path="reco
     axis_col = np.full((x_peaks.shape[0], 1), 'x')
     x_peaks = np.hstack((axis_col, x_peaks))
     axis_col = np.full((y_peaks.shape[0], 1), 'y')
-    x_peaks = np.hstack((axis_col, y_peaks))
+    y_peaks = np.hstack((axis_col, y_peaks))
     axis_col = np.full((z_peaks.shape[0], 1), 'z')
-    x_peaks = np.hstack((axis_col, z_peaks))
+    z_peaks = np.hstack((axis_col, z_peaks))
     axis_col = np.full((e_peaks.shape[0], 1), 'e')
-    x_peaks = np.hstack((axis_col, e_peaks))
+    e_peaks = np.hstack((axis_col, e_peaks))
 
     # Combine and sort by timestamp
     events = np.concatenate((x_peaks, y_peaks, z_peaks, e_peaks))
-    # sorting step to still figure out...
+    # sorting step 
+    events.sort(key=lambda x: x[0]) # replace index with index of timestamp
 
     # Initialize state
     pos = {'x': 0.0, 'y': 0.0, 'z': 0.0}
@@ -46,7 +47,7 @@ def point_cloud_generation(x_peaks, y_peaks, z_peaks, e_peaks, output_path="reco
 
         # Update position
         step_size = 1.0 / STEPS_PER_MM[axis]
-        pos[axis] += event['direction'] * step_size
+        pos[axis] += event['direction'] * step_size # replace 'direction' with index containing direction
 
         # If extruding, add current position to point cloud
         if extruding:
